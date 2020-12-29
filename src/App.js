@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from 'react';
+import { Route } from 'react-router-dom'
 
-function App() {
+import { auth, createUserProfileDocument } from './utils/firebase.utils';
+import LandingPage from './pages/Landing/LandingPage';
+
+const App = () => {
+  const [currentUser, setCurrentUser] = useState(null)
+
+  useEffect(() => {
+    const unsunscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth)
+
+        userRef.onSnapshot(snap => setCurrentUser({ id: snap.id, ...snap.data() }))
+      } else { // Logout
+        setCurrentUser(userAuth)
+      }
+    })
+
+    return () => {
+      // Unmount to prevent any memory leaks in the app
+      unsunscribeFromAuth()
+    }
+  }, [])
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <Route exact path='/' component={LandingPage} />
+    </main>
   );
 }
 
