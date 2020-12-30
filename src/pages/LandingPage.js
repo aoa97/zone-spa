@@ -1,44 +1,36 @@
 import React, { useState } from 'react';
-import { Button, Card, Form, Grid, Icon, Divider, Header, Message } from 'semantic-ui-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Card, Form, Icon, Divider, Header, Message } from 'semantic-ui-react';
 
-import { auth, signInWithGoogle } from '../../utils/firebase.utils';
-import RegisterModal from '../../components/RegisterModal';
-import './LandingPage.scss'
+import { loginUser, loginWithGoogle } from '../actions/userActions';
+import RegisterModal from '../components/RegisterModal';
 
 const LandingPage = () => {
-    // Login States
+    const dispatch = useDispatch()
+    const { loading, error } = useSelector(state => state.userLogin)
+
+    // States
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
-    const [error, setError] = useState(null)
     const [registerModal, setRegisterModal] = useState(false)
-
-    const loginHandler = async () => {
-        try {
-            await auth.signInWithEmailAndPassword(email, password)
-            setEmail('')
-            setPassword('')
-            setError(null)
-        } catch (e) {
-            setError(e.message)
-        }
-    }
 
     return (
         <>
             {/* Register Modal */}
-            <RegisterModal open={registerModal} onClose={() => setRegisterModal(false)} />
+            <RegisterModal
+                open={registerModal}
+                onClose={() => setRegisterModal(false)}
+            />
 
-            <Grid container>
-                <Grid.Column computer={10} only='computer'>Left</Grid.Column>
-
-                <Grid.Column computer={6} tablet={16} mobile={16} className='landing__right'>
-                    <Card fluid raised>
+            <div style={styles.img}>
+                <div style={styles.over} className="center-v" >
+                    <Card centered raised>
                         <Card.Content>
                             <Header className='text-center'>Welcome Back</Header>
 
-                            <Form loading={false}>
+                            <Form loading={loading}>
                                 <Form.Input
+                                    required
                                     label="E-mail address"
                                     placeholder="E-mail address"
                                     value={email}
@@ -46,6 +38,7 @@ const LandingPage = () => {
                                 />
 
                                 <Form.Input
+                                    required
                                     type="password"
                                     label="Password"
                                     placeholder="Password"
@@ -56,20 +49,22 @@ const LandingPage = () => {
                                 {error && (
                                     <Message
                                         negative
-                                        header='Login Error'
                                         content={error}
                                     />
                                 )}
 
                                 <Button.Group fluid>
-                                    <Button primary onClick={loginHandler}>Sign In</Button>
+                                    <Button
+                                        primary
+                                        onClick={() => dispatch(loginUser(email, password))}
+                                    >Sign In</Button>
 
                                     <Button.Or />
 
                                     <Button
                                         basic
                                         primary
-                                        onClick={() => signInWithGoogle()}
+                                        onClick={() => dispatch(loginWithGoogle())}
                                     >
                                         <Icon name='google' />With Google
                                     </Button>
@@ -78,21 +73,34 @@ const LandingPage = () => {
 
                             <Divider />
 
-                            <div className="center-block-h">
+                            <div className="center-h">
                                 <Button
                                     color='green'
                                     className="center"
                                     onClick={() => setRegisterModal(true)}
                                 >
                                     New Account
-                                </Button>
+                            </Button>
                             </div>
                         </Card.Content>
                     </Card>
-                </Grid.Column>
-            </Grid>
+                </div>
+            </div>
         </>
     );
+}
+
+const styles = {
+    img: {
+        backgroundImage: "url(/images/background.jpg)",
+        height: '100vh',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover'
+    },
+    over: {
+        backgroundColor: 'rgba(0, 0, 0, .3)'
+    }
 }
 
 export default LandingPage;

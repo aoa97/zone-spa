@@ -5,13 +5,30 @@ body {
 button {
   cursor: pointer;
 }
-  
+
+button, input {
+  border-radius: 0 !important;
+}
+
 /* Helpers */
-.center-block-h{
+.center-h{
   display: flex;
   justify-content: center;
 }
 
+.center-v{
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  /* background-color: #333; */
+}
+
 .text-center {
   text-align: center;
+}
+
+/* SUI */
+.card {
+  border-radius: 0 !important;
+  background-color: rgba(255 , 255, 255, .9) !important;
 }

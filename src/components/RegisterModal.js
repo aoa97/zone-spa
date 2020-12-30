@@ -1,37 +1,26 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Form, Button, Message } from 'semantic-ui-react';
 
-import { auth, createUserProfileDocument } from '../utils/firebase.utils';
+import { registerUser } from '../actions/userActions';
 
 const RegisterModal = ({ open, onClose }) => {
+    const dispatch = useDispatch()
+    const { loading, error } = useSelector(state => state.userRegister)
+
+    // States
     const [displayName, setDisplayName] = useState('')
-    const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
-    const [error, setError] = useState(null)
-
-    const registerHandler = async () => {
-        try {
-            await auth.createUserWithEmailAndPassword(email, password)
-            await auth.currentUser.updateProfile({ displayName })
-
-            setDisplayName('')
-            setUsername('')
-            setEmail('')
-            setPassword('')
-        } catch (e) {
-            setError(e.message)
-        }
-    }
 
     return (
         <Modal closeIcon centered={false} size='mini' open={open} onClose={onClose}>
             <Modal.Header className='text-center'>Create Your Account</Modal.Header>
 
             <Modal.Content>
-                <Form loading={false}>
+                <Form loading={loading}>
                     <Form.Input
+                        required
                         label="Full Name"
                         placeholder="Full Name"
                         value={displayName}
@@ -39,6 +28,7 @@ const RegisterModal = ({ open, onClose }) => {
                     />
 
                     <Form.Input
+                        required
                         label="E-mail address"
                         placeholder="E-mail address"
                         value={email}
@@ -46,13 +36,7 @@ const RegisterModal = ({ open, onClose }) => {
                     />
 
                     <Form.Input
-                        label="Username"
-                        placeholder="Username"
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
-                    />
-
-                    <Form.Input
+                        required
                         type="password"
                         label="Password"
                         placeholder="Password"
@@ -63,12 +47,15 @@ const RegisterModal = ({ open, onClose }) => {
                     {error && (
                         <Message
                             negative
-                            header='Create User Error'
                             content={error}
                         />
                     )}
 
-                    <Button primary fluid onClick={registerHandler}>Sign Up</Button>
+                    <Button
+                        primary
+                        fluid
+                        onClick={() => dispatch(registerUser(displayName, email, password))}
+                    >Sign Up</Button>
                 </Form>
             </Modal.Content>
         </Modal>
