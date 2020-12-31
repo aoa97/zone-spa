@@ -3,6 +3,7 @@ import {
     USER_STATE_REQUEST,
     USER_STATE_RESPONSE,
     USER_STATE_FAIL,
+    USER_STATE_RESET,
     USER_REGISTER_REQUEST,
     USER_REGISTER_RESPONSE,
     USER_REGISTER_FAIL,
@@ -11,7 +12,7 @@ import {
     USER_LOGIN_FAIL,
     USER_GOOGLE_LOGIN_REQUEST,
     USER_GOOGLE_LOGIN_RESPONSE,
-    USER_GOOGLE_LOGIN_FAIL
+    USER_GOOGLE_LOGIN_FAIL,
 } from "../constants/userConstants"
 
 export const listenUser = () => async (dispatch) => {
@@ -30,7 +31,7 @@ export const listenUser = () => async (dispatch) => {
                 })
             } else {
                 dispatch({
-                    type: USER_GOOGLE_LOGIN_RESPONSE,
+                    type: USER_STATE_RESET,
                     payload: userAuth
                 })
             }
@@ -50,8 +51,6 @@ export const registerUser = (displayName, email, password) => async (dispatch) =
         dispatch({ type: USER_REGISTER_RESPONSE })
     } catch (e) {
         let message = ''
-
-        console.log(e.code);
 
         switch (e.code) {
             case 'auth/invalid-email':

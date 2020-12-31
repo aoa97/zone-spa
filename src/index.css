@@ -6,9 +6,9 @@ button {
   cursor: pointer;
 }
 
-button, input {
+/* button, input {
   border-radius: 0 !important;
-}
+} */
 
 /* Helpers */
 .center-h{
@@ -28,7 +28,7 @@ button, input {
 }
 
 /* SUI */
-.card {
+/* .card {
   border-radius: 0 !important;
   background-color: rgba(255 , 255, 255, .9) !important;
-}
+} */

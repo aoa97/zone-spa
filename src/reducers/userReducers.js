@@ -2,6 +2,7 @@ import {
     USER_STATE_REQUEST,
     USER_STATE_RESPONSE,
     USER_STATE_FAIL,
+    USER_STATE_RESET,
     USER_REGISTER_REQUEST,
     USER_REGISTER_RESPONSE,
     USER_REGISTER_FAIL,
@@ -21,6 +22,8 @@ export const userStateReducer = (state = { user: {} }, action) => {
             return { loading: false, success: true, user: action.payload }
         case USER_STATE_FAIL:
             return { loading: false, error: action.payload }
+        case USER_STATE_RESET:
+            return { user: {} }
         default:
             return state
     }

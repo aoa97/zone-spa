@@ -36,6 +36,8 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
             await userRef.set({
                 displayName: userAuth.displayName,
                 email: userAuth.email,
+                avatar: userAuth.photoURL ? userAuth.photoURL : "http://placehold.it/150",
+                phone: null,
                 createdAt: new Date(),
                 ...additionalData
             })
