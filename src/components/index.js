@@ -1,13 +1,21 @@
 import AppContainer from './AppContainer'
 import RegisterModal from './RegisterModal'
 import VerifyMessage from './VerifyMessage'
-import NoPostMessage from './NoPostMessage'
-import NewPost from './NewPost'
+import ViewImage from './ViewImage';
+import UpdateEmailModal from './UpdateEmailModal';
+import CreatePostModal from './post/CreatePostModal';
+import NoPostMessage from './post/NoPostMessage'
+import Post from './post/Post';
+import NewPost from './post/NewPost'
 
 export {
     AppContainer,
     RegisterModal,
     VerifyMessage,
     NoPostMessage,
-    NewPost
+    NewPost,
+    Post,
+    ViewImage,
+    UpdateEmailModal,
+    CreatePostModal
 }

@@ -8,6 +8,7 @@ import { USER_STATE_RESET } from '../constants/userConstants';
 
 const AppContainer = ({ history, children, right }) => {
     const dispatch = useDispatch()
+
     const { user } = useSelector(state => state.userState)
 
     const [activeItem, setActiveItem] = useState('home')
@@ -22,6 +23,7 @@ const AppContainer = ({ history, children, right }) => {
         history.push(`/${name}`)
     }
 
+    const fname = user.displayName && user.displayName.split(" ")[0]
     return (
         <div style={{ paddingTop: 20 }}>
             <Grid container>
@@ -30,7 +32,7 @@ const AppContainer = ({ history, children, right }) => {
                         <Menu.Header>
                             <Dropdown
                                 item
-                                trigger={<span><Image avatar size='mini' src={user.avatar} /> Hello, {user.displayName}</span>}
+                                trigger={<span><Image avatar size='mini' src={user.avatar} /> Hello, {fname}</span>}
                                 style={{ fontWeight: 'bold' }}
                             >
 

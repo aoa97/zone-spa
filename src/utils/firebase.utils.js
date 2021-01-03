@@ -49,3 +49,14 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     return userRef
 }
 
+export const updateUserProfileDocument = async (newUser) => {
+    try {
+        const { uid } = firebase.auth().currentUser
+        const userRef = firestore.doc(`/users/${uid}`)
+
+        await userRef.update(newUser)
+    } catch (e) {
+        throw new Error("Error updating the user")
+    }
+}
+

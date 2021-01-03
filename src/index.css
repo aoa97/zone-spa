@@ -27,6 +27,10 @@ button {
   text-align: center;
 }
 
+.text-meta {
+    color: #939393;
+}
+
 /* SUI */
 /* .card {
   border-radius: 0 !important;

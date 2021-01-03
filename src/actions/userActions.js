@@ -1,4 +1,4 @@
-import { auth, signInWithGoogle, createUserProfileDocument } from '../utils/firebase.utils';
+import { auth, signInWithGoogle, createUserProfileDocument, updateUserProfileDocument } from '../utils/firebase.utils';
 import {
     USER_STATE_REQUEST,
     USER_STATE_RESPONSE,
@@ -13,6 +13,9 @@ import {
     USER_GOOGLE_LOGIN_REQUEST,
     USER_GOOGLE_LOGIN_RESPONSE,
     USER_GOOGLE_LOGIN_FAIL,
+    USER_UPDATE_REQUEST,
+    USER_UPDATE_RESPONSE,
+    USER_UPDATE_FAIL,
 } from "../constants/userConstants"
 
 export const listenUser = () => async (dispatch) => {
@@ -45,8 +48,9 @@ export const registerUser = (displayName, email, password) => async (dispatch) =
     try {
         dispatch({ type: USER_REGISTER_REQUEST })
 
-        await auth.createUserWithEmailAndPassword(email, password)
-        await auth.currentUser.updateProfile({ displayName })
+        const userAuth = await auth.createUserWithEmailAndPassword(email, password)
+        await userAuth.user.updateProfile({ displayName })
+        await userAuth.user.sendEmailVerification()
 
         dispatch({ type: USER_REGISTER_RESPONSE })
     } catch (e) {
@@ -110,5 +114,36 @@ export const loginWithGoogle = () => (dispatch) => {
         dispatch({ type: USER_GOOGLE_LOGIN_RESPONSE })
     } catch (e) {
         dispatch({ type: USER_GOOGLE_LOGIN_FAIL, payload: e.message })
+    }
+}
+
+export const updateUser = (newUser) => async (dispatch) => {
+    const { email } = newUser
+
+    try {
+        dispatch({ type: USER_UPDATE_REQUEST })
+
+        await auth.currentUser.updateEmail(email)
+        await updateUserProfileDocument({ email })
+
+        dispatch({ type: USER_UPDATE_RESPONSE })
+    } catch (e) {
+        let message = ''
+
+        switch (e.code) {
+            case 'auth/invalid-email':
+                message = email.length > 0 && "Please enter a valid email address."
+                break
+            case 'auth/email-already-in-use':
+                message = "The email address is already in use."
+                break
+            case 'auth/network-request-failed':
+                message = "Network error, please check your connection."
+                break
+            default:
+                message = e.message
+        }
+
+        dispatch({ type: USER_UPDATE_FAIL, payload: message })
     }
 }

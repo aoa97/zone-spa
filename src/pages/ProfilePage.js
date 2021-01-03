@@ -1,7 +1,6 @@
-import React from 'react';
 import { Segment, Image, Header, Grid, Button, Icon, Divider } from 'semantic-ui-react';
 
-import { AppContainer, NewPost, NoPostMessage } from '../components';
+import { AppContainer, NewPost, NoPostMessage, Post } from '../components';
 import { useSelector } from 'react-redux';
 
 const ProfilePage = () => {
@@ -31,7 +30,7 @@ const ProfilePage = () => {
                         <Grid>
                             <Grid.Column computer={12} tablet={9} mobile={9}>
                                 <Header style={{ marginBottom: 4 }} >{user.displayName}</Header>
-                                <p>This is a status placeholder</p>
+                                <p className='text-meta'>This is a status placeholder</p>
                             </Grid.Column>
 
                             <Grid.Column computer={4} tablet={7} mobile={7} >
@@ -46,24 +45,37 @@ const ProfilePage = () => {
                         <Divider />
 
                         <Grid>
-                            <Grid.Column width={4}>E-mail:</Grid.Column>
-                            <Grid.Column width={12}>{user.email}</Grid.Column>
+                            <Grid.Column width={4}>
+                                <p className='text-meta'>E-mail:</p>
+                            </Grid.Column>
+
+                            <Grid.Column width={12}>
+                                <a href={`mailto:${user.email}`}>{user.email}</a>
+                            </Grid.Column>
                         </Grid>
 
                         <Grid>
-                            <Grid.Column width={4}>Phone: </Grid.Column>
+                            <Grid.Column width={4}>
+                                <p className='text-meta'>Phone:</p>
+                            </Grid.Column>
+
                             <Grid.Column width={12}>+20123456789</Grid.Column>
                         </Grid>
 
                         <Grid>
-                            <Grid.Column width={4}>Birthdate: </Grid.Column>
+                            <Grid.Column width={4}>
+                                <p className='text-meta'>Birthdate:</p>
+                            </Grid.Column>
+
                             <Grid.Column width={12}>September 20, 1997</Grid.Column>
                         </Grid>
                     </Segment>
 
                     <NewPost />
 
-                    <NoPostMessage />
+                    {/* <NoPostMessage /> */}
+
+                    <Post />
                 </Grid.Column>
             </Grid>
         </AppContainer>
