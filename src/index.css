@@ -1,14 +1,19 @@
 body {
-  background-color: #FAFAFA;
+  background-color:#f2f2f8;
 }
 
-button {
+main {
+  padding-top: 70px;
+}
+
+p {
+  margin: 0
+}
+
+button, a {
   cursor: pointer;
 }
 
-/* button, input {
-  border-radius: 0 !important;
-} */
 
 /* Helpers */
 .center-h{
@@ -31,8 +36,38 @@ button {
     color: #939393;
 }
 
+.icon-btn{
+  cursor: pointer;
+  padding: 5px 8px;
+  border-radius: 6px;
+}
+
+.icon-btn:hover{
+  background-color: #f2f2f8;
+}
+
+
+@media only screen and (max-width: 768px) {
+  
+}
+
 /* SUI */
+
+input[placeholder='Search Zone'] {
+  background-color:#f2f2f8 !important;
+  border: none !important;
+}
+
+.container {
+  /* padding: 1px 0; */
+}
+
 /* .card {
   border-radius: 0 !important;
   background-color: rgba(255 , 255, 255, .9) !important;
+} */
+
+
+/* button, input {
+  border-radius: 0 !important;
 } */

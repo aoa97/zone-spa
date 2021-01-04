@@ -3,7 +3,8 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
 import { userRegisterReducer, userStateReducer, userLoginReducer, userGoogleLoginReducer, userUpdateReducer } from './reducers/userReducers';
-import { postCreateReducer } from './reducers/postReducers';
+import { postCreateReducer, postListReducer } from './reducers/postReducers';
+import { comCreateReducer, comListReducer } from './reducers/comReducers';
 
 const reducers = combineReducers({
     // User
@@ -14,7 +15,11 @@ const reducers = combineReducers({
     userLogin: userLoginReducer,
     userUpdate: userUpdateReducer,
     // Post
-    postCreate: postCreateReducer
+    postCreate: postCreateReducer,
+    postList: postListReducer,
+    // Community
+    comCreate: comCreateReducer,
+    comList: comListReducer,
 })
 
 const initialState = {

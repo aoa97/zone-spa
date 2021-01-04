@@ -1,13 +1,23 @@
-import { Segment, Image, Header, Grid, Button, Icon, Divider } from 'semantic-ui-react';
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { Segment, Image, Header, Grid, Button, Icon, Divider, Message, Placeholder } from 'semantic-ui-react';
 
-import { AppContainer, NewPost, NoPostMessage, Post } from '../components';
-import { useSelector } from 'react-redux';
+import { getPosts } from '../actions/postActions';
+import { AppContainer, NewPost, NoPostMessage, Post, PostPlaceholder } from '../components';
 
 const ProfilePage = () => {
+    const dispatch = useDispatch()
+
+    // Selectors
     const { user } = useSelector(state => state.userState)
+    const { loading, posts: postsSnap, error } = useSelector(state => state.postList)
+
+    useEffect(() => {
+        dispatch(getPosts(user.id))
+    }, [dispatch])
 
     return (
-        <AppContainer>
+        <AppContainer active='profile'>
             <Grid>
                 <Grid.Column computer={4} mobile={16}>
                     <Segment>
@@ -73,9 +83,11 @@ const ProfilePage = () => {
 
                     <NewPost />
 
-                    {/* <NoPostMessage /> */}
 
-                    <Post />
+                    {loading ? <PostPlaceholder />
+                        : error ? <Message negative content={error} />
+                            : postsSnap.length === 0 ? <NoPostMessage /> : <>{postsSnap.map(post => <Post post={post.data()} user={user} />)}</>
+                    }
                 </Grid.Column>
             </Grid>
         </AppContainer>

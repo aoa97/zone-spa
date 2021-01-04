@@ -1,22 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Modal, Form, Image, Button } from 'semantic-ui-react';
+import { Modal, Form, Image, Button, Message } from 'semantic-ui-react';
 
 import { createPost } from '../../actions/postActions';
 
 const CreatePostModal = ({ open, onClose }) => {
     const dispatch = useDispatch()
 
+    // Selectors
     const { user } = useSelector(state => state.userState)
+    const { loading, success, error } = useSelector(state => state.postCreate)
 
     const [text, setText] = useState('')
 
-
-    const hanleCreatePost = () => {
-        dispatch(createPost({
-
-        }))
+    const handleCreatePost = () => {
+        dispatch(createPost({ text }))
     }
+
+    useEffect(() => {
+        if (success) {
+            onClose()
+        }
+    }, [success])
 
     const fname = user.displayName ? user.displayName.split(' ')[0] : ""
     return (
@@ -42,11 +47,14 @@ const CreatePostModal = ({ open, onClose }) => {
                     <Button
                         fluid
                         primary
+                        loading={loading}
                         disabled={text.length === 0}
-                        onClick={hanleCreatePost}
+                        onClick={handleCreatePost}
                     >
                         Post
                     </Button>
+
+                    {error && <Message negative content={error} />}
                 </Form>
             </Modal.Content>
         </Modal>

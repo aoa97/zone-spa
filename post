@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Icon, Button, Label, Segment, Header, Image, Divider, Popup } from 'semantic-ui-react';
-import moment from 'moment'
 
 import PostComments from './PostComments';
 import ViewImage from '../ViewImage';
 
-const Post = ({ post, user, community }) => {
+
+const img = 'https://sun9-31.userapi.com/impg/SCXfY_ia-xw3-fEi2TaPVA9ixMPLfNKuR7ZR9w/gS1FqFF2jWU.jpg?size=1280x852&quality=96&sign=3b6410210b0611d659f7dae239d6bb5e&type=album'
+const Post = () => {
     const [like, setLike] = useState(false)
-    const [comments, setComments] = useState(false)
     const [viewImage, setViewImage] = useState(false)
 
     const handleLike = () => {
@@ -22,20 +22,19 @@ const Post = ({ post, user, community }) => {
             />
 
             <Segment color='blue'>
-                {community && <Label ribbon as='a' color='blue'>{community}</Label>}
+                <Label as='a' color='blue' ribbon>Family</Label>
 
                 <section style={{ margin: '1rem 0', display: 'flex', justifyContent: 'space-between' }}>
-                    {/* User */}
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <Image
                             avatar
                             style={{ width: 50, height: 50 }}
-                            src={user.avatar}
+                            src='http://placehold.it/50'
                         />
 
                         <div style={{ marginLeft: 4 }}>
-                            <Header size='tiny' style={{ margin: 0 }}>{user.displayName}</Header>
-                            <span className='text-meta'>{moment(post.createdAt.toDate()).startOf('seconds').fromNow()}</span>
+                            <Header size='tiny' style={{ margin: 0 }}>Ahmed Usama</Header>
+                            <span className='text-meta'>30 minutes ago</span>
                         </div>
                     </div>
 
@@ -53,7 +52,33 @@ const Post = ({ post, user, community }) => {
                 </section>
 
                 <section>
-                    <p style={{ fontSize: 14.5 }}>{post.text}</p>
+                    <p style={{ fontSize: 14.5 }}>This is my first post</p>
+
+                    {/*
+                <Image
+                    fluid
+                    src='https://sun9-31.userapi.com/impg/SCXfY_ia-xw3-fEi2TaPVA9ixMPLfNKuR7ZR9w/gS1FqFF2jWU.jpg?size=1280x852&quality=96&sign=3b6410210b0611d659f7dae239d6bb5e&type=album'
+                /> */}
+
+                    {/* <Image.Group size='small'>
+                        <Image
+                            src={img}
+                            onClick={() => setViewImage(img)}
+                        />
+                        <Image
+                            src={img}
+                            onClick={() => setViewImage(img)}
+                        />
+                        <Image
+                            src={img}
+                            onClick={() => setViewImage(img)}
+                        />
+                        <Image
+                            src={img}
+                            onClick={() => setViewImage(img)}
+                        />
+                    </Image.Group> */}
+
                 </section>
 
                 <Divider />
@@ -66,20 +91,21 @@ const Post = ({ post, user, community }) => {
                             color={like && 'blue'}
                             onClick={handleLike}
                         />
-                        <Label>{post.likeCount}</Label>
+                        <Label>123</Label>
                     </div>
 
                     <div style={{ marginLeft: 20 }}>
                         <Button
                             circular
                             icon='comments'
-                            onClick={() => setComments(!comments)}
                         />
-                        <Label>{post.commentCount}</Label>
+                        <Label>123</Label>
                     </div>
                 </section>
 
-                {comments && <PostComments />}
+
+
+                <PostComments />
             </Segment>
         </>
     );

@@ -5,7 +5,7 @@ const NoPostMessage = () => {
     return (
         <Segment style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Image src='/images/post.png' />
-            <p style={{ marginTop: 8 }}> There are no posts yet.</p>
+            <p className='text-meta' style={{ marginTop: 8 }}> There are no posts yet.</p>
         </Segment>
     );
 }

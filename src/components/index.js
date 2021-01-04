@@ -7,6 +7,8 @@ import CreatePostModal from './post/CreatePostModal';
 import NoPostMessage from './post/NoPostMessage'
 import Post from './post/Post';
 import NewPost from './post/NewPost'
+import PostPlaceholder from './post/PostPlaceholder';
+import CreateCommunityModal from './CreateCommunityModal';
 
 export {
     AppContainer,
@@ -17,5 +19,7 @@ export {
     Post,
     ViewImage,
     UpdateEmailModal,
-    CreatePostModal
+    CreatePostModal,
+    PostPlaceholder,
+    CreateCommunityModal
 }

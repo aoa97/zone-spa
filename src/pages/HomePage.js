@@ -4,7 +4,7 @@ import { AppContainer, VerifyMessage, NewPost, NoPostMessage } from '../componen
 
 const HomePage = () => {
     return (
-        <AppContainer right>
+        <AppContainer right active='home'>
             <NewPost />
 
             <VerifyMessage />
