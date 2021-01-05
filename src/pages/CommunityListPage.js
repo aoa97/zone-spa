@@ -6,7 +6,7 @@ import { Segment, Card, Button, Divider, Header, Label, Item, Input, Popup, Icon
 import { getComs } from '../actions/comActions';
 import { AppContainer, CreateCommunityModal } from "../components";
 
-const CommunitiesPage = () => {
+const CommunityListPage = () => {
     const dispatch = useDispatch()
 
     const { loading, coms: communities, error } = useSelector(state => state.comList)
@@ -70,4 +70,4 @@ const CommunitiesPage = () => {
     );
 }
 
-export default CommunitiesPage;
+export default CommunityListPage;

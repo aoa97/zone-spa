@@ -1,36 +1,36 @@
 import { useState } from 'react';
 import { Menu, Container, Dropdown, Image, Segment, Input, Button } from 'semantic-ui-react';
 
+import './Navbar.scss'
 import Logo from './svg/Logo';
 import Bell from './svg/icons/Bell';
 import IconButton from './IconButton';
 
 const Navbar = () => {
+    const [search, setSearch] = useState('')
     const [notification, setNotification] = useState(false)
 
     return (
-        <Menu borderless fixed='top' widths='3' style={{ boxShadow: 'none', alignItems: 'center' }}>
+        <nav>
             <Container>
-                <Menu.Item style={{ justifyContent: 'flex-start', padding: '10px 0' }}>
-                    <Logo />
-                </Menu.Item>
+                <Logo className='nav__logo' />
 
-                <Menu.Item>
-                    <Input
-                        icon='search'
-                        iconPosition='left'
-                        placeholder='Search Zone'
-                    />
-                </Menu.Item>
+                <Input
+                    loading={false}
+                    icon='search'
+                    iconPosition='left'
+                    placeholder='Search Zone'
+                    value={search}
+                    onChange={e => setSearch(e.target.value)}
+                />
 
-                <Menu.Item style={{ justifyContent: 'flex-end', padding: '10px 0' }}>
-                    <IconButton onClick={() => setNotification(!notification)}>
-                        <Bell outline={!notification} />
-                    </IconButton>
-                </Menu.Item>
+                <IconButton onClick={() => setNotification(!notification)}>
+                    <Bell outline={!notification} />
+                </IconButton>
             </Container>
-        </Menu>
+        </nav>
     );
 }
 
 export default Navbar;
+

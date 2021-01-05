@@ -4,7 +4,7 @@ import thunk from "redux-thunk";
 
 import { userRegisterReducer, userStateReducer, userLoginReducer, userGoogleLoginReducer, userUpdateReducer } from './reducers/userReducers';
 import { postCreateReducer, postListReducer } from './reducers/postReducers';
-import { comCreateReducer, comListReducer } from './reducers/comReducers';
+import { comCreateReducer, comListReducer, comDetailsReducer } from './reducers/comReducers';
 
 const reducers = combineReducers({
     // User
@@ -20,6 +20,7 @@ const reducers = combineReducers({
     // Community
     comCreate: comCreateReducer,
     comList: comListReducer,
+    comDetails: comDetailsReducer
 })
 
 const initialState = {

@@ -21,7 +21,7 @@ const Post = ({ post, user, community }) => {
                 onClose={() => setViewImage(false)}
             />
 
-            <Segment color='blue'>
+            <Segment color='blue' key={post.id}>
                 {community && <Label ribbon as='a' color='blue'>{community}</Label>}
 
                 <section style={{ margin: '1rem 0', display: 'flex', justifyContent: 'space-between' }}>
@@ -30,11 +30,11 @@ const Post = ({ post, user, community }) => {
                         <Image
                             avatar
                             style={{ width: 50, height: 50 }}
-                            src={user.avatar}
+                            src={community ? 'http://placehold.it/50' : user.avatar}
                         />
 
                         <div style={{ marginLeft: 4 }}>
-                            <Header size='tiny' style={{ margin: 0 }}>{user.displayName}</Header>
+                            <Header size='tiny' style={{ margin: 0 }}>{community ? 'just placed' : user.displayName}</Header>
                             <span className='text-meta'>{moment(post.createdAt.toDate()).startOf('seconds').fromNow()}</span>
                         </div>
                     </div>

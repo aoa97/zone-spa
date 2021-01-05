@@ -4,7 +4,7 @@ import { Image, Input, Segment } from 'semantic-ui-react'
 
 import CreatePostModal from './CreatePostModal'
 
-const NewPost = () => {
+const NewPost = ({ com }) => {
     const { user } = useSelector(state => state.userState)
     const fname = user.displayName ? user.displayName.split(' ')[0] : ""
 
@@ -16,6 +16,7 @@ const NewPost = () => {
                 open={modal}
                 onClose={() => setModal(false)}
                 user={user}
+                com={com}
             />
 
             <Segment style={{ display: 'flex' }}>

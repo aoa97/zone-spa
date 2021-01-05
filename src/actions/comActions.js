@@ -4,7 +4,10 @@ import {
     COM_CREATE_FAIL,
     COM_LIST_REQUEST,
     COM_LIST_RESPONSE,
-    COM_LIST_FAIL
+    COM_LIST_FAIL,
+    COM_DETAILS_REQUEST,
+    COM_DETAILS_RESPONSE,
+    COM_DETAILS_FAIL
 } from '../constants/comConstants'
 import { auth, firestore } from '../utils/firebase.utils'
 
@@ -39,5 +42,17 @@ export const getComs = () => async (dispatch, getState) => {
         })
     } catch (e) {
         dispatch({ type: COM_LIST_FAIL, payload: e.message })
+    }
+}
+
+export const getComDetails = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: COM_DETAILS_REQUEST })
+
+        await firestore.collection('communities').doc(id).onSnapshot(doc => {
+            dispatch({ type: COM_DETAILS_RESPONSE, payload: { id: doc.id, ...doc.data() } })
+        })
+    } catch (e) {
+        dispatch({ type: COM_DETAILS_FAIL, payload: e.message })
     }
 }

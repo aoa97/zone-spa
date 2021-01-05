@@ -4,7 +4,7 @@ import { Modal, Form, Image, Button, Message } from 'semantic-ui-react';
 
 import { createPost } from '../../actions/postActions';
 
-const CreatePostModal = ({ open, onClose }) => {
+const CreatePostModal = ({ open, onClose, com }) => {
     const dispatch = useDispatch()
 
     // Selectors
@@ -14,12 +14,13 @@ const CreatePostModal = ({ open, onClose }) => {
     const [text, setText] = useState('')
 
     const handleCreatePost = () => {
-        dispatch(createPost({ text }))
+        dispatch(createPost({ text }, com))
     }
 
     useEffect(() => {
         if (success) {
             onClose()
+            setText('')
         }
     }, [success])
 

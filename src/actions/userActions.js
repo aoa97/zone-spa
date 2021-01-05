@@ -118,13 +118,14 @@ export const loginWithGoogle = () => (dispatch) => {
 }
 
 export const updateUser = (newUser) => async (dispatch) => {
-    const { email } = newUser
-
     try {
         dispatch({ type: USER_UPDATE_REQUEST })
 
-        await auth.currentUser.updateEmail(email)
-        await updateUserProfileDocument({ email })
+
+        if (newUser.email) {
+            await auth.currentUser.updateEmail(newUser.email)
+        }
+        await updateUserProfileDocument(newUser)
 
         dispatch({ type: USER_UPDATE_RESPONSE })
     } catch (e) {

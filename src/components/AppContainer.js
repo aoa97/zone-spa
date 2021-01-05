@@ -34,7 +34,7 @@ const AppContainer = ({ history, children, right, active }) => {
                                 <Dropdown
                                     item
                                     trigger={<span><Image avatar size='mini' src={user.avatar} /> Hello, {fname}</span>}
-                                    style={{ fontWeight: 'bold' }}
+                                    style={{ fontWeight: 'bold', marginTop: 0 }}
                                 >
 
                                     <Dropdown.Menu>
