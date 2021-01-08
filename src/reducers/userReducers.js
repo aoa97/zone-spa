@@ -15,7 +15,10 @@ import {
     USER_UPDATE_REQUEST,
     USER_UPDATE_RESPONSE,
     USER_UPDATE_FAIL,
-    USER_UPDATE_RESET
+    USER_UPDATE_RESET,
+    USER_LIST_REQUEST,
+    USER_LIST_RESPONSE,
+    USER_LIST_FAIL
 } from '../constants/userConstants';
 
 export const userStateReducer = (state = { user: {} }, action) => {
@@ -82,6 +85,19 @@ export const userUpdateReducer = (state = {}, action) => {
             return { loading: false, error: action.payload }
         case USER_UPDATE_RESET:
             return {}
+        default:
+            return state
+    }
+}
+
+export const userListReducer = (state = { users: [] }, action) => {
+    switch (action.type) {
+        case USER_LIST_REQUEST:
+            return { loading: true, users: [] }
+        case USER_LIST_RESPONSE:
+            return { loading: false, users: action.payload }
+        case USER_LIST_FAIL:
+            return { loading: false, error: action.payload }
         default:
             return state
     }

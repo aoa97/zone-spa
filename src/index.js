@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux';
 
 import 'semantic-ui-css/semantic.min.css'
-import './index.css';
+import './index.scss';
 import App from './App';
 import store from './store';
 import reportWebVitals from './reportWebVitals';

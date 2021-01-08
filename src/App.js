@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Loader, Dimmer } from 'semantic-ui-react';
 
 import { listenUser } from './actions/userActions';
-import { HomePage, LandingPage, ProfilePage, CommunityListPage, CommunityPage } from './pages';
+import { HomePage, LandingPage, ProfilePage, CommunityListPage, CommunityPage, FriendsPage } from './pages';
 
 const App = ({ history }) => {
   // Listen to auth state
@@ -35,6 +35,7 @@ const App = ({ history }) => {
             <Route path='/profile' component={ProfilePage} />
             <Route exact path='/communities' component={CommunityListPage} />
             <Route path='/communities/:id' component={CommunityPage} />
+            <Route path='/friends' component={FriendsPage} />
           </>
         )}
     </>

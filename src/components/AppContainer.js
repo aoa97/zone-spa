@@ -28,7 +28,7 @@ const AppContainer = ({ history, children, right, active }) => {
 
             <main>
                 <Grid container>
-                    <Grid.Column computer={3} tablet={4} only='computer tablet'>
+                    <Grid.Column computer={3} tablet={3} only='computer tablet'>
                         <Menu vertical borderless text secondary fluid color='blue' activeIndex={'home'}>
                             <Menu.Header>
                                 <Dropdown
@@ -80,9 +80,10 @@ const AppContainer = ({ history, children, right, active }) => {
                         </Menu.Item>
                         </Menu>
                     </Grid.Column>
-                    <Grid.Column computer={right ? 9 : 13} tablet={right ? 7 : 12} mobile={16}>{children}</Grid.Column>
 
-                    {right && <Grid.Column computer={4} tablet={5} only='computer tablet'>Right</Grid.Column>}
+                    <Grid.Column computer={right ? 9 : 13} tablet={right ? 9 : 12} mobile={16}>{children}</Grid.Column>
+
+                    {right && <Grid.Column computer={4} tablet={4} only='computer tablet'>{right}</Grid.Column>}
                 </Grid>
 
                 {/* Mobile menu */}

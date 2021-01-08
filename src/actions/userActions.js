@@ -1,4 +1,4 @@
-import { auth, signInWithGoogle, createUserProfileDocument, updateUserProfileDocument } from '../utils/firebase.utils';
+import { auth, firestore, signInWithGoogle, createUserProfileDocument, updateUserProfileDocument } from '../utils/firebase.utils';
 import {
     USER_STATE_REQUEST,
     USER_STATE_RESPONSE,
@@ -16,6 +16,9 @@ import {
     USER_UPDATE_REQUEST,
     USER_UPDATE_RESPONSE,
     USER_UPDATE_FAIL,
+    USER_LIST_REQUEST,
+    USER_LIST_RESPONSE,
+    USER_LIST_FAIL,
 } from "../constants/userConstants"
 
 export const listenUser = () => async (dispatch) => {
@@ -133,7 +136,7 @@ export const updateUser = (newUser) => async (dispatch) => {
 
         switch (e.code) {
             case 'auth/invalid-email':
-                message = email.length > 0 && "Please enter a valid email address."
+                message = newUser.email.length > 0 && "Please enter a valid email address."
                 break
             case 'auth/email-already-in-use':
                 message = "The email address is already in use."
@@ -146,5 +149,19 @@ export const updateUser = (newUser) => async (dispatch) => {
         }
 
         dispatch({ type: USER_UPDATE_FAIL, payload: message })
+    }
+}
+
+export const getUsers = (query) => async (dispatch) => {
+    try {
+        dispatch({ type: USER_LIST_REQUEST })
+
+        await firestore.collection('users').where('email', '!=', auth.currentUser.email).onSnapshot(snap => {
+            const users = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+
+            dispatch({ type: USER_LIST_RESPONSE, payload: users })
+        })
+    } catch (e) {
+        dispatch({ type: USER_LIST_FAIL, payload: e.message })
     }
 }

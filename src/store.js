@@ -2,7 +2,7 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
-import { userRegisterReducer, userStateReducer, userLoginReducer, userGoogleLoginReducer, userUpdateReducer } from './reducers/userReducers';
+import { userRegisterReducer, userStateReducer, userLoginReducer, userGoogleLoginReducer, userUpdateReducer, userListReducer } from './reducers/userReducers';
 import { postCreateReducer, postListReducer } from './reducers/postReducers';
 import { comCreateReducer, comListReducer, comDetailsReducer } from './reducers/comReducers';
 
@@ -14,6 +14,7 @@ const reducers = combineReducers({
     userGoogleLogin: userGoogleLoginReducer,
     userLogin: userLoginReducer,
     userUpdate: userUpdateReducer,
+    userList: userListReducer,
     // Post
     postCreate: postCreateReducer,
     postList: postListReducer,

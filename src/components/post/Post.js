@@ -35,7 +35,7 @@ const Post = ({ post, user, community }) => {
 
                         <div style={{ marginLeft: 4 }}>
                             <Header size='tiny' style={{ margin: 0 }}>{community ? 'just placed' : user.displayName}</Header>
-                            <span className='text-meta'>{moment(post.createdAt.toDate()).startOf('seconds').fromNow()}</span>
+                            <span className='text-meta'>{post.createdAt && moment(post.createdAt.toDate()).startOf('seconds').fromNow()}</span>
                         </div>
                     </div>
 

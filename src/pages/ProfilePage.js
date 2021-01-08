@@ -125,7 +125,7 @@ const ProfilePage = () => {
 
                     <NewPost />
 
-                    {loading ? <PostPlaceholder />
+                    {loading ? null
                         : error ? <Message negative content={error} />
                             : postsSnap.length === 0 ? <NoPostMessage /> : <>{postsSnap.map(post => <Post post={post.data()} user={user} />)}</>
                     }
