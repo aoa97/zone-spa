@@ -19,6 +19,8 @@ firebase.analytics();
 export const auth = firebase.auth()
 export const firestore = firebase.firestore()
 
+export const timestamp = firebase.firestore.FieldValue.serverTimestamp
+
 // Google Sign In
 const provider = new firebase.auth.GoogleAuthProvider()
 provider.setCustomParameters({ prompt: 'select_account' })
@@ -38,7 +40,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
                 email: userAuth.email,
                 avatar: userAuth.photoURL ? userAuth.photoURL : "http://placehold.it/150",
                 phone: null,
-                createdAt: new Date(),
+                createdAt: timestamp(),
                 ...additionalData
             })
         } catch (e) {

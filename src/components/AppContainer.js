@@ -87,7 +87,7 @@ const AppContainer = ({ history, children, right, active }) => {
                 </Grid>
 
                 {/* Mobile menu */}
-                <Grid container>
+                <Grid container style={{ paddingTop: 40 }}>
                     <Grid.Column width={16} only='mobile'>
                         <Menu borderless icon='labeled' size='small' fixed='bottom' color='blue' style={{ justifyContent: 'center' }}>
                             <Menu.Item

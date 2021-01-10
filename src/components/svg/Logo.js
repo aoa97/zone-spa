@@ -1,4 +1,6 @@
-const Logo = ({ className }) => {
+import { withRouter } from 'react-router-dom'
+
+const Logo = ({ className, history }) => {
     return (
         <svg
             className={className}
@@ -6,6 +8,8 @@ const Logo = ({ className }) => {
             width="54.189"
             height="29.863"
             viewBox="0 0 54.189 29.863"
+            style={{ cursor: 'pointer' }}
+            onClick={() => history.push('/home')}
         >
             <g
                 fill="#2185d0"
@@ -44,4 +48,4 @@ const Logo = ({ className }) => {
     );
 }
 
-export default Logo;
+export default withRouter(Logo);

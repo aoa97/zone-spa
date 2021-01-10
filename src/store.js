@@ -3,7 +3,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
 import { userRegisterReducer, userStateReducer, userLoginReducer, userGoogleLoginReducer, userUpdateReducer, userListReducer } from './reducers/userReducers';
-import { postCreateReducer, postListReducer } from './reducers/postReducers';
+import { postCreateReducer, postDeleteReducer, postListReducer } from './reducers/postReducers';
 import { comCreateReducer, comListReducer, comDetailsReducer } from './reducers/comReducers';
 
 const reducers = combineReducers({
@@ -18,6 +18,7 @@ const reducers = combineReducers({
     // Post
     postCreate: postCreateReducer,
     postList: postListReducer,
+    postDelete: postDeleteReducer,
     // Community
     comCreate: comCreateReducer,
     comList: comListReducer,

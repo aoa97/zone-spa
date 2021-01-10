@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Form, Image, Button, Message } from 'semantic-ui-react';
 
-import { createPost } from '../../actions/postActions';
+import { createCommunityPost, createProfilePost } from '../../actions/postActions';
 
 const CreatePostModal = ({ open, onClose, com }) => {
     const dispatch = useDispatch()
@@ -14,7 +14,11 @@ const CreatePostModal = ({ open, onClose, com }) => {
     const [text, setText] = useState('')
 
     const handleCreatePost = () => {
-        dispatch(createPost({ text }, com))
+        if (com) {
+            dispatch(createCommunityPost(com, { text }))
+        } else {
+            dispatch(createProfilePost({ text }))
+        }
     }
 
     useEffect(() => {

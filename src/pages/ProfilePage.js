@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Segment, Image, Header, Grid, Button, Icon, Divider, Message, Placeholder, Form, Input } from 'semantic-ui-react';
 import moment from 'moment'
 
-import { getUserPosts } from '../actions/postActions';
+import { getProfilePosts } from '../actions/postActions';
 import { updateUser } from '../actions/userActions';
 import { USER_UPDATE_RESET } from '../constants/userConstants';
 import { AppContainer, NewPost, NoPostMessage, Post, PostPlaceholder, IconButton, EditProfileModal } from '../components';
@@ -14,7 +14,7 @@ const ProfilePage = () => {
     // Selectors
     const { user } = useSelector(state => state.userState)
     const { loading: loadingStatus, success: successStatus } = useSelector(state => state.userUpdate)
-    const { loading, posts: postsSnap, error } = useSelector(state => state.postList)
+    const { loading, posts, error } = useSelector(state => state.postList)
 
     const [status, setStatus] = useState(user && user.status)
     const [updateStatus, setUpdateStatus] = useState(false)
@@ -26,7 +26,7 @@ const ProfilePage = () => {
     }
 
     useEffect(() => {
-        dispatch(getUserPosts(user.id))
+        dispatch(getProfilePosts(user.id))
 
         if (successStatus) {
             setUpdateStatus(false)
@@ -125,9 +125,9 @@ const ProfilePage = () => {
 
                     <NewPost />
 
-                    {loading ? null
+                    {loading ? <PostPlaceholder />
                         : error ? <Message negative content={error} />
-                            : postsSnap.length === 0 ? <NoPostMessage /> : <>{postsSnap.map(post => <Post post={post.data()} user={user} />)}</>
+                            : posts.length === 0 ? <NoPostMessage /> : <>{posts.map(post => <Post post={post} />)}</>
                     }
                 </Grid.Column>
             </Grid>

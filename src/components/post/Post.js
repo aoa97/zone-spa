@@ -1,18 +1,32 @@
-import { useState } from 'react';
-import { Icon, Button, Label, Segment, Header, Image, Divider, Popup } from 'semantic-ui-react';
+import { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom'
+import { Icon, Button, Label, Segment, Header, Image, Divider, Popup, Confirm } from 'semantic-ui-react';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment'
 
+import { deleteProfilePost, deleteComPost } from '../../actions/postActions';
 import PostComments from './PostComments';
 import ViewImage from '../ViewImage';
 
-const Post = ({ post, user, community }) => {
+const Post = ({ post, history }) => {
+    const dispatch = useDispatch()
+
+    const { loading: loadingDelete, success: successDelete, error: errorDelete } = useSelector(state => state.postDelete)
+
     const [like, setLike] = useState(false)
     const [comments, setComments] = useState(false)
     const [viewImage, setViewImage] = useState(false)
+    const [deleteConfirm, setDeleteConfirm] = useState(false)
 
     const handleLike = () => {
         setLike(!like)
     }
+
+    useEffect(() => {
+        if (successDelete) {
+            setDeleteConfirm(false)
+        }
+    }, [successDelete])
 
     return (
         <>
@@ -21,20 +35,36 @@ const Post = ({ post, user, community }) => {
                 onClose={() => setViewImage(false)}
             />
 
+            <Confirm
+                open={deleteConfirm}
+                cancelButton='Cancel'
+                confirmButton="Delete"
+                onCancel={() => setDeleteConfirm(false)}
+                onConfirm={() => dispatch(post.com && deleteComPost(post.id) || deleteProfilePost(post.id))}
+            />
+
             <Segment color='blue' key={post.id}>
-                {community && <Label ribbon as='a' color='blue'>{community}</Label>}
+                {post.com && (
+                    <Label
+                        ribbon
+                        as='a'
+                        color='blue'
+                        onClick={() => history.push(`/communities/${post.com.id}`)}
+                    >
+                        {post.com.name}
+                    </Label>
+                )}
 
                 <section style={{ margin: '1rem 0', display: 'flex', justifyContent: 'space-between' }}>
-                    {/* User */}
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <Image
                             avatar
                             style={{ width: 50, height: 50 }}
-                            src={community ? 'http://placehold.it/50' : user.avatar}
+                            src={post.userAvatar}
                         />
 
                         <div style={{ marginLeft: 4 }}>
-                            <Header size='tiny' style={{ margin: 0 }}>{community ? 'just placed' : user.displayName}</Header>
+                            <Header size='tiny' style={{ margin: 0 }}>{post.userName}</Header>
                             <span className='text-meta'>{post.createdAt && moment(post.createdAt.toDate()).startOf('seconds').fromNow()}</span>
                         </div>
                     </div>
@@ -46,8 +76,9 @@ const Post = ({ post, user, community }) => {
                         style={{ padding: 0 }}
                     >
                         <Button.Group vertical basic>
-                            <Button>Edit</Button>
-                            <Button>Delete</Button>
+                            <Button onClick={() => alert("Edit")}>Edit</Button>
+
+                            <Button onClick={() => setDeleteConfirm(true)}>Delete</Button>
                         </Button.Group>
                     </Popup>
                 </section>
@@ -85,4 +116,4 @@ const Post = ({ post, user, community }) => {
     );
 }
 
-export default Post;
+export default withRouter(Post);

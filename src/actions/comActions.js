@@ -9,19 +9,17 @@ import {
     COM_DETAILS_RESPONSE,
     COM_DETAILS_FAIL
 } from '../constants/comConstants'
-import { auth, firestore } from '../utils/firebase.utils'
-
-const currentUid = auth.currentUser && auth.currentUser.uid
+import { auth, firestore, timestamp } from '../utils/firebase.utils'
 
 export const createCom = (com) => async (dispatch, getState) => {
     try {
         dispatch({ type: COM_CREATE_REQUEST })
 
         await firestore.collection('communities').add({
-            createdAt: new Date(),
-            createdBy: currentUid,
+            createdAt: timestamp(),
+            createdBy: auth.currentUser.uid,
             image: com.image ? com.image : 'http://placehold.it/100',
-            members: new Array(currentUid),
+            members: new Array(auth.currentUser.uid),
             ...com
         })
 

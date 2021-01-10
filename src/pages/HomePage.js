@@ -8,11 +8,13 @@ import { AppContainer, VerifyMessage, NewPost, NoPostMessage, PostPlaceholder, P
 const HomePage = () => {
     const dispatch = useDispatch()
 
+    // Selectores
     const { loading, posts, error } = useSelector(state => state.postList)
+    const { success: successDelete } = useSelector(state => state.postDelete)
 
     useEffect(() => {
         dispatch(getAllComsPosts())
-    }, [dispatch])
+    }, [dispatch, successDelete])
 
     return (
         <AppContainer right active='home'>
@@ -22,7 +24,7 @@ const HomePage = () => {
 
             {loading ? <PostPlaceholder />
                 : error ? <Message negative content={error} />
-                    : posts.length === 0 ? <NoPostMessage /> : <>{posts.map(post => <Post community={"Placeholder"} post={post} />)}</>
+                    : posts.length === 0 ? <NoPostMessage /> : <>{posts.map(post => <Post post={post} />)}</>
             }
         </AppContainer>
     );
