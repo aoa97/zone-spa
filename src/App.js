@@ -12,7 +12,6 @@ const App = ({ history }) => {
   const { loading, success } = useSelector(state => state.userState)
 
   useEffect(() => {
-
     if (success) {
       history.push('/home')
     } else {
@@ -31,11 +30,11 @@ const App = ({ history }) => {
         </Dimmer>
       ) : (
           <>
-            <Route path='/home' component={HomePage} />
             <Route path='/profile' component={ProfilePage} />
-            <Route exact path='/communities' component={CommunityListPage} />
-            <Route path='/communities/:id' component={CommunityPage} />
             <Route path='/friends' component={FriendsPage} />
+            <Route path='/communities/:id' component={CommunityPage} />
+            <Route exact path='/communities' component={CommunityListPage} />
+            <Route exact path='/home' component={HomePage} />
           </>
         )}
     </>

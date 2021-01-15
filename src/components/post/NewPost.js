@@ -22,6 +22,7 @@ const NewPost = ({ com }) => {
             <Segment style={{ display: 'flex' }}>
                 <Image
                     avatar
+                    bordered
                     style={{ marginRight: 10 }}
                     src={user.avatar}
                 />

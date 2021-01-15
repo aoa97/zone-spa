@@ -11,6 +11,7 @@ import PostPlaceholder from './post/PostPlaceholder';
 import CreateCommunityModal from './CreateCommunityModal';
 import IconButton from './IconButton';
 import EditProfileModal from './EditProfileModal';
+import UploadButton from './UploadButton';
 
 export {
     AppContainer,
@@ -25,5 +26,6 @@ export {
     PostPlaceholder,
     CreateCommunityModal,
     IconButton,
-    EditProfileModal
+    EditProfileModal,
+    UploadButton
 }

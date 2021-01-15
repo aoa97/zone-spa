@@ -12,7 +12,7 @@ const Navbar = () => {
 
     return (
         <nav>
-            <Container>
+            <Container className='nav__container'>
                 <Logo className='nav__logo' />
 
                 <Input

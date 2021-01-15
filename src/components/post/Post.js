@@ -59,6 +59,7 @@ const Post = ({ post, history }) => {
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <Image
                             avatar
+                            bordered
                             style={{ width: 50, height: 50 }}
                             src={post.userAvatar}
                         />
@@ -85,6 +86,12 @@ const Post = ({ post, history }) => {
 
                 <section>
                     <p style={{ fontSize: 14.5 }}>{post.text}</p>
+
+                    <Image
+                        style={{ marginTop: 6 }}
+                        fluid
+                        src={post.image}
+                    />
                 </section>
 
                 <Divider />

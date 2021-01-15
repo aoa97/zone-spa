@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Modal, Form, Image, Button, Message } from 'semantic-ui-react';
+import { Modal, Form, Image, Button, Message, Label } from 'semantic-ui-react';
 
 import { createCommunityPost, createProfilePost } from '../../actions/postActions';
+import UploadButton from '../UploadButton'
 
 const CreatePostModal = ({ open, onClose, com }) => {
     const dispatch = useDispatch()
@@ -11,13 +12,25 @@ const CreatePostModal = ({ open, onClose, com }) => {
     const { user } = useSelector(state => state.userState)
     const { loading, success, error } = useSelector(state => state.postCreate)
 
+    // States
     const [text, setText] = useState('')
+    const [image, setImage] = useState(null)
 
     const handleCreatePost = () => {
         if (com) {
-            dispatch(createCommunityPost(com, { text }))
+            dispatch(createCommunityPost(com, { text, image }))
         } else {
-            dispatch(createProfilePost({ text }))
+            dispatch(createProfilePost({ text, image }))
+        }
+    }
+
+    const handleUploadImage = (e) => {
+        const types = ['image/png', 'image/jpeg']
+        const selected = e.target.files[0]
+        if (selected && types.includes(selected.type)) {
+            setImage(selected)
+        } else {
+            alert("Please upload an image")
         }
     }
 
@@ -34,13 +47,13 @@ const CreatePostModal = ({ open, onClose, com }) => {
             <Modal.Header className='text-center'>Create Post</Modal.Header>
 
             <Modal.Content>
-                <Image
+                {/* <Image
                     centered
                     avatar
-                    size='tiny'
+                    size='mini'
                     src={user.avatar}
-                    style={{ marginBottom: 6 }}
-                />
+                    style={{ border: '1px solid #2185d0' }}
+                /> */}
 
                 <Form>
                     <Form.TextArea
@@ -50,7 +63,6 @@ const CreatePostModal = ({ open, onClose, com }) => {
                     />
 
                     <Button
-                        fluid
                         primary
                         loading={loading}
                         disabled={text.length === 0}
@@ -58,6 +70,17 @@ const CreatePostModal = ({ open, onClose, com }) => {
                     >
                         Post
                     </Button>
+
+
+                    <div style={{ float: 'right' }} >
+                        {image && <Label style={{ marginRight: 10 }}>{image.name}</Label>}
+
+                        <Button.Group basic size='small'>
+                            <UploadButton onChange={handleUploadImage} icon='image' />
+                            <UploadButton icon='video' />
+                            <UploadButton icon='attach' />
+                        </Button.Group>
+                    </div>
 
                     {error && <Message negative content={error} />}
                 </Form>

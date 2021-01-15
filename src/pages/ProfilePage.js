@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { Segment, Image, Header, Grid, Button, Icon, Divider, Message, Placeholder, Form, Input } from 'semantic-ui-react';
+import { Segment, Image, Header, Grid, Button, Icon, Divider, Message, Placeholder, Form, Input, Label } from 'semantic-ui-react';
 import moment from 'moment'
 
 import { getProfilePosts } from '../actions/postActions';
-import { updateUser } from '../actions/userActions';
+import { updateUser, updateUserAvatar } from '../actions/userActions';
 import { USER_UPDATE_RESET } from '../constants/userConstants';
-import { AppContainer, NewPost, NoPostMessage, Post, PostPlaceholder, IconButton, EditProfileModal } from '../components';
+import { AppContainer, NewPost, NoPostMessage, Post, PostPlaceholder, IconButton, EditProfileModal, UploadButton } from '../components';
 
 const ProfilePage = () => {
     const dispatch = useDispatch()
@@ -16,13 +16,25 @@ const ProfilePage = () => {
     const { loading: loadingStatus, success: successStatus } = useSelector(state => state.userUpdate)
     const { loading, posts, error } = useSelector(state => state.postList)
 
-    const [status, setStatus] = useState(user && user.status)
+    const [status, setStatus] = useState(user && user.status ? user.status : "Edit your status")
     const [updateStatus, setUpdateStatus] = useState(false)
     const [editProfile, setEditProfile] = useState(false)
 
     const handleUpdateStatus = async () => {
         await dispatch(updateUser({ status }))
         dispatch({ type: USER_UPDATE_RESET })
+    }
+
+    const handleUpdateAvatar = (e) => {
+        const types = ['image/jpeg', 'image/png']
+
+        const selected = e.target.files[0]
+
+        if (selected && types.includes(selected.type)) {
+            dispatch(updateUserAvatar(selected))
+        } else {
+            alert("Please select an image")
+        }
     }
 
     useEffect(() => {
@@ -42,15 +54,17 @@ const ProfilePage = () => {
                     <Segment>
                         <Image
                             fluid
+                            bordered
                             src={user.avatar}
                         />
 
-                        <Button
+                        <UploadButton
                             fluid
                             style={{ marginTop: 10 }}
+                            onChange={handleUpdateAvatar}
                         >
                             Edit
-                        </Button>
+                        </UploadButton>
                     </Segment>
                 </Grid.Column>
 
@@ -74,7 +88,7 @@ const ProfilePage = () => {
                                                 onClick={handleUpdateStatus}
                                             >
                                                 Save
-                                             </Form.Button>
+                                            </Form.Button>
                                         </Form.Group>
                                     </Form>
                                 ) : (
@@ -96,31 +110,37 @@ const ProfilePage = () => {
 
                         <Divider />
 
-                        <Grid>
-                            <Grid.Column width={4}>
-                                <p className='text-meta'>E-mail:</p>
-                            </Grid.Column>
+                        {user.email && (
+                            <Grid>
+                                <Grid.Column width={4}>
+                                    <p className='text-meta'>E-mail:</p>
+                                </Grid.Column>
 
-                            <Grid.Column width={12}>
-                                <a href={`mailto:${user.email}`}>{user.email}</a>
-                            </Grid.Column>
-                        </Grid>
+                                <Grid.Column width={12}>
+                                    <a href={`mailto:${user.email}`}>{user.email}</a>
+                                </Grid.Column>
+                            </Grid>
+                        )}
 
-                        <Grid>
-                            <Grid.Column width={4}>
-                                <p className='text-meta'>Phone:</p>
-                            </Grid.Column>
+                        {user.phone && (
+                            <Grid>
+                                <Grid.Column width={4}>
+                                    <p className='text-meta'>Phone:</p>
+                                </Grid.Column>
 
-                            <Grid.Column width={12}>{user.phone}</Grid.Column>
-                        </Grid>
+                                <Grid.Column width={12}>{user.phone}</Grid.Column>
+                            </Grid>
+                        )}
 
-                        <Grid>
-                            <Grid.Column width={4}>
-                                <p className='text-meta'>Birthdate:</p>
-                            </Grid.Column>
+                        {user.birthdate && (
+                            <Grid>
+                                <Grid.Column width={4}>
+                                    <p className='text-meta'>Birthdate:</p>
+                                </Grid.Column>
 
-                            <Grid.Column width={12}>{user.birthdate && moment(user.birthdate.toDate()).format('LL')}</Grid.Column>
-                        </Grid>
+                                <Grid.Column width={12}>{user.birthdate && moment(user.birthdate.toDate()).format('LL')}</Grid.Column>
+                            </Grid>
+                        )}
                     </Segment>
 
                     <NewPost />

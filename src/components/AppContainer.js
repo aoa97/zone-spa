@@ -28,15 +28,15 @@ const AppContainer = ({ history, children, right, active }) => {
 
             <main>
                 <Grid container>
-                    <Grid.Column computer={3} tablet={3} only='computer tablet'>
-                        <Menu vertical borderless text secondary fluid color='blue' activeIndex={'home'}>
+                    <Grid.Column computer={4} tablet={3} only='computer tablet'>
+                        <Menu vertical text secondary color='blue' activeIndex={'home'} style={{ position: 'fixed', zIndex: '1' }} >
                             <Menu.Header>
                                 <Dropdown
                                     item
+                                    labeled
                                     trigger={<span><Image avatar size='mini' src={user.avatar} /> Hello, {fname}</span>}
-                                    style={{ fontWeight: 'bold', marginTop: 0 }}
+                                    style={{ fontWeight: 'bold', marginTop: 0, display: 'flex', alignItems: 'center' }}
                                 >
-
                                     <Dropdown.Menu>
                                         <Dropdown.Header>{user.displayName}</Dropdown.Header>
 
@@ -51,37 +51,41 @@ const AppContainer = ({ history, children, right, active }) => {
                                 name='home'
                                 active={active === 'home'}
                                 onClick={handleItemClick}
+                                style={{ color: "#373a40" }}
                             >
-                                <Icon name='home' /> Home
-                        </Menu.Item>
+                                <Icon circular name='home' /> Home
+                            </Menu.Item>
 
                             <Menu.Item
                                 name='communities'
                                 active={active === 'communities'}
                                 onClick={handleItemClick}
+                                style={{ color: "#373a40" }}
                             >
-                                <Icon name='users' /> Communities
-                        </Menu.Item>
+                                <Icon circular name='users' /> Communities
+                            </Menu.Item>
 
                             <Menu.Item
                                 name='friends'
                                 active={active === 'friends'}
                                 onClick={handleItemClick}
+                                style={{ color: "#373a40" }}
                             >
-                                <Icon name='list' /> Friends
-                        </Menu.Item>
+                                <Icon circular name='list alternate' /> Friends
+                            </Menu.Item>
 
                             <Menu.Item
                                 name='profile'
                                 active={active === 'profile'}
                                 onClick={handleItemClick}
+                                style={{ color: "#373a40" }}
                             >
-                                <Icon name='user' /> Profile
-                        </Menu.Item>
+                                <Icon circular name='user' /> Profile
+                            </Menu.Item>
                         </Menu>
                     </Grid.Column>
 
-                    <Grid.Column computer={right ? 9 : 13} tablet={right ? 9 : 12} mobile={16}>{children}</Grid.Column>
+                    <Grid.Column computer={right ? 8 : 12} tablet={right ? 9 : 12} mobile={16}>{children}</Grid.Column>
 
                     {right && <Grid.Column computer={4} tablet={4} only='computer tablet'>{right}</Grid.Column>}
                 </Grid>
@@ -89,35 +93,38 @@ const AppContainer = ({ history, children, right, active }) => {
                 {/* Mobile menu */}
                 <Grid container style={{ paddingTop: 40 }}>
                     <Grid.Column width={16} only='mobile'>
-                        <Menu borderless icon='labeled' size='small' fixed='bottom' color='blue' style={{ justifyContent: 'center' }}>
+                        <Menu borderless size='huge' fixed='bottom' color='blue' style={{ justifyContent: 'center' }}>
                             <Menu.Item
                                 name='home'
-                                icon='home'
                                 active={active === 'home'}
                                 onClick={handleItemClick}
-                            />
+                            >
+                                <Icon circular name='home' />
+                            </Menu.Item>
 
                             <Menu.Item
                                 name='communities'
-                                icon='users'
                                 active={active === 'communities'}
                                 onClick={handleItemClick}
-                            />
-
+                            >
+                                <Icon circular name='users' />
+                            </Menu.Item>
 
                             <Menu.Item
                                 name='friends'
-                                icon='list'
                                 active={active === 'friends'}
                                 onClick={handleItemClick}
-                            />
+                            >
+                                <Icon circular name='list alternate' />
+                            </Menu.Item>
 
                             <Menu.Item
                                 name='profile'
-                                icon='user'
                                 active={active === 'profile'}
                                 onClick={handleItemClick}
-                            />
+                            >
+                                <Icon circular name='user' />
+                            </Menu.Item>
                         </Menu>
                     </Grid.Column>
                 </Grid>
