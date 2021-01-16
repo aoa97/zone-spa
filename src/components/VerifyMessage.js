@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Message, Popup } from 'semantic-ui-react';
 
-import { auth } from '../utils/firebase.utils';
 import UpdateEmailModal from './UpdateEmailModal';
+import { auth } from '../utils/firebase.utils';
 
 const VerifyMessage = () => {
     // Resend states
@@ -33,7 +33,9 @@ const VerifyMessage = () => {
                     <Message.Content>
                         <Message.Header>Verify your account</Message.Header>
 
-                        <p>All beautiful Zone users verify their email address. Check your inbox for the message we just sent {':)'}</p>
+                        <p>
+                            All beautiful Zone users verify their email address. Check your inbox for the message we just sent {':)'}
+                        </p>
 
                         <Button.Group>
                             <Button onClick={() => setUpdateEmailModal(true)}>Update E-mail</Button>
@@ -46,7 +48,14 @@ const VerifyMessage = () => {
                                 on='click'
                                 header="Sent"
                                 content='Another verification message has been sent, please check your account.'
-                                trigger={<Button primary loading={loadingResend} onClick={handleResend}> Resend</Button>}
+                                trigger={
+                                    <Button
+                                        primary
+                                        loading={loadingResend}
+                                        onClick={handleResend}>
+                                        Resend
+                                    </Button>
+                                }
                             />
                         </Button.Group>
                     </Message.Content>

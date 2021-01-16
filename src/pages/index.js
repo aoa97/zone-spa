@@ -1,9 +1,9 @@
 import HomePage from './HomePage';
-import LandingPage from './LandingPage';
-import ProfilePage from './ProfilePage';
-import CommunityListPage from './CommunityListPage';
+import LandingPage from './landing/LandingPage';
+import ProfilePage from './profile/ProfilePage';
+import CommunityListPage from './communityList/CommunityListPage';
 import CommunityPage from './CommunityPage';
-import FriendsPage from './FriendsPage';
+import FriendsPage from './friends/FriendsPage';
 
 export {
     HomePage,

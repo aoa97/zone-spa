@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Grid, Menu, Icon, Dropdown, Image, Sidebar } from 'semantic-ui-react'
 
+import Navbar from './Navbar';
 import { auth } from '../utils/firebase.utils';
 import { USER_STATE_RESET } from '../constants/userConstants';
-import Navbar from './Navbar';
 
 const AppContainer = ({ history, children, right, active }) => {
     const dispatch = useDispatch()
 
+    // Selectors
     const { user } = useSelector(state => state.userState)
 
     const handleLogout = () => {
@@ -22,13 +23,14 @@ const AppContainer = ({ history, children, right, active }) => {
     }
 
     const fname = user.displayName && user.displayName.split(" ")[0]
+
     return (
         <>
             <Navbar />
 
             <main>
                 <Grid container>
-                    <Grid.Column computer={4} tablet={3} only='computer tablet'>
+                    <Grid.Column computer={4} tablet={4} only='computer tablet'>
                         <Menu vertical text secondary color='blue' activeIndex={'home'} style={{ position: 'fixed', zIndex: '1' }} >
                             <Menu.Header>
                                 <Dropdown
@@ -87,7 +89,7 @@ const AppContainer = ({ history, children, right, active }) => {
 
                     <Grid.Column computer={right ? 8 : 12} tablet={right ? 9 : 12} mobile={16}>{children}</Grid.Column>
 
-                    {right && <Grid.Column computer={4} tablet={4} only='computer tablet'>{right}</Grid.Column>}
+                    {right && <Grid.Column computer={4} tablet={3} only='computer tablet'>{right}</Grid.Column>}
                 </Grid>
 
                 {/* Mobile menu */}

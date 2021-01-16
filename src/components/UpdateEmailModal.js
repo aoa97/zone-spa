@@ -40,7 +40,14 @@ const UpdateEmailModal = ({ open, onClose }) => {
                             />
                         )}
 
-                        <Button primary fluid onClick={() => dispatch(updateUser({ email }))}>Submit</Button>
+                        <Button
+                            primary
+                            fluid
+                            disabled={email.length === 0}
+                            onClick={() => dispatch(updateUser({ email }))}
+                        >
+                            Submit
+                        </Button>
                     </Form>
                 ) : <Message positive icon='check circle outline' content="Your email has been updated successfully." />}
             </Modal.Content>

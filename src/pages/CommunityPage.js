@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Segment, Message, Grid, Button, Image, Divider, Header, Icon } from "semantic-ui-react";
-import { AppContainer, PostPlaceholder, Post, NewPost, NoPostMessage, IconButton } from "../components";
 import moment from 'moment'
 
+import { AppContainer, PostPlaceholder, Post, NewPost, NoPostMessage, IconButton } from "../components";
 import { getComPosts } from "../actions/postActions";
 import { getComDetails } from '../actions/comActions';
 
@@ -12,6 +12,7 @@ const CommunityPage = ({ match }) => {
 
     const dispatch = useDispatch()
 
+    // Selectors
     const { loading, error, com } = useSelector(state => state.comDetails)
     const { loading: loadingPosts, error: errorPosts, posts } = useSelector(state => state.postList)
 
@@ -23,6 +24,7 @@ const CommunityPage = ({ match }) => {
     return (
         <AppContainer active='communities'>
             <Grid>
+                {/* Avatar */}
                 <Grid.Column computer={4} mobile={16}>
                     <Segment>
                         <Image
@@ -40,6 +42,7 @@ const CommunityPage = ({ match }) => {
                     </Segment>
                 </Grid.Column>
 
+                {/* Details */}
                 <Grid.Column computer={12} mobile={16}>
                     <Segment>
                         <Grid>
@@ -67,9 +70,13 @@ const CommunityPage = ({ match }) => {
                                 <p className='text-meta'>Created At:</p>
                             </Grid.Column>
 
-                            <Grid.Column width={12}>{com.createdAt && moment(com.createdAt.toDate()).format('LL')}</Grid.Column>
+                            <Grid.Column width={12}>
+                                {com.createdAt && moment(com.createdAt.toDate()).format('LL')}
+                            </Grid.Column>
                         </Grid>
                     </Segment>
+
+                    {/* Posts */}
 
                     <NewPost com={comId} />
 

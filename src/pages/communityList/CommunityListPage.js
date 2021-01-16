@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
-import { Segment, Card, Button, Divider, Header, Label, Item, Input, Popup, Icon, Dropdown, Message, Placeholder } from 'semantic-ui-react';
+import { Segment, Button, Divider, Item, Input, Message, Placeholder } from 'semantic-ui-react';
 
-import { getComs } from '../actions/comActions';
-import { AppContainer, CreateCommunityModal } from "../components";
+import { AppContainer } from "../../components";
+import { CreateCommunityModal } from './components'
+import { getComs } from '../../actions/comActions';
 
 const CommunityListPage = () => {
     const dispatch = useDispatch()
 
+    // Selectors
     const { loading, coms: communities, error } = useSelector(state => state.comList)
 
+    // States
     const [createModal, setCreateModal] = useState(false)
 
     useEffect(() => {
@@ -28,14 +31,26 @@ const CommunityListPage = () => {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <strong>Your Communities</strong>
 
-                    <Button primary size='small' onClick={() => setCreateModal(true)}>Create community</Button>
+                    <Button
+                        primary
+                        size='small'
+                        onClick={() => setCreateModal(true)}
+                    >
+                        Create community
+                    </Button>
                 </div>
 
                 <Divider />
 
-                <Input fluid action={{ icon: 'search' }} placeholder='Search communities' />
+                <Input
+                    fluid
+                    action={{ icon: 'search' }}
+                    placeholder='Search communities'
+                />
 
-                {loading ? (
+                {error && <Message negative content={error} />}
+
+                {loading && (
                     <Item.Group>
                         <Placeholder>
                             <Placeholder.Header image>
@@ -45,9 +60,17 @@ const CommunityListPage = () => {
                             </Placeholder.Header>
                         </Placeholder>
                     </Item.Group>
-                ) : error ? <Message negative content={error} /> : communities.length === 0 ? (
-                    <Message info style={{ textAlign: 'center', padding: 20 }} content='You have not joined any communities yet.' />
-                ) : (
+                )}
+
+                {communities.length === 0
+                    ? (
+                        <Message
+                            info
+                            style={{ textAlign: 'center', padding: 20 }}
+                            content='You have not joined any communities yet.'
+                        />
+                    )
+                    : (
                         <Item.Group divided unstackable >
                             {communities.map(c => (
                                 <Item key={c.id} as={Link} to={`/communities/${c.id}`}>
@@ -59,7 +82,9 @@ const CommunityListPage = () => {
                                     <Item.Content verticalAlign='middle'>
                                         <Item.Header>{c.name}</Item.Header>
                                         <Item.Meta>{c.description}</Item.Meta>
-                                        <Item.Meta>{c.members.length === 1 ? `1 member` : `${c.members.length} members`}</Item.Meta>
+                                        <Item.Meta>
+                                            {c.members.length === 1 ? `1 member` : `${c.members.length} members`}
+                                        </Item.Meta>
                                     </Item.Content>
                                 </Item>
                             ))}

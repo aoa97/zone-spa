@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Form, Button, Message } from 'semantic-ui-react';
 
-import { registerUser } from '../actions/userActions';
+import { registerUser } from '../../../actions/userActions';
 
 const RegisterModal = ({ open, onClose }) => {
     const dispatch = useDispatch()
+
+    // Selectors
     const { loading, error } = useSelector(state => state.userRegister)
 
     // States

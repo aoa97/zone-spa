@@ -3,10 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Segment, Image, Header, Grid, Button, Icon, Divider, Message, Placeholder, Form, Input, Label } from 'semantic-ui-react';
 import moment from 'moment'
 
-import { getProfilePosts } from '../actions/postActions';
-import { updateUser, updateUserAvatar } from '../actions/userActions';
-import { USER_UPDATE_RESET } from '../constants/userConstants';
-import { AppContainer, NewPost, NoPostMessage, Post, PostPlaceholder, IconButton, EditProfileModal, UploadButton } from '../components';
+import { AppContainer, NewPost, NoPostMessage, Post, PostPlaceholder, IconButton, UploadButton } from '../../components';
+import { EditProfileModal } from './components'
+import { getProfilePosts } from '../../actions/postActions';
+import { updateUser, updateUserAvatar } from '../../actions/userActions';
+import { USER_UPDATE_RESET } from '../../constants/userConstants';
+
 
 const ProfilePage = () => {
     const dispatch = useDispatch()
@@ -16,6 +18,7 @@ const ProfilePage = () => {
     const { loading: loadingStatus, success: successStatus } = useSelector(state => state.userUpdate)
     const { loading, posts, error } = useSelector(state => state.postList)
 
+    // States
     const [status, setStatus] = useState(user && user.status ? user.status : "Edit your status")
     const [updateStatus, setUpdateStatus] = useState(false)
     const [editProfile, setEditProfile] = useState(false)
@@ -138,7 +141,9 @@ const ProfilePage = () => {
                                     <p className='text-meta'>Birthdate:</p>
                                 </Grid.Column>
 
-                                <Grid.Column width={12}>{user.birthdate && moment(user.birthdate.toDate()).format('LL')}</Grid.Column>
+                                <Grid.Column width={12}>
+                                    {user.birthdate && moment(user.birthdate.toDate()).format('LL')}
+                                </Grid.Column>
                             </Grid>
                         )}
                     </Segment>

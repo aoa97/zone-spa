@@ -2,19 +2,17 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button, Form, Message } from 'semantic-ui-react';
 
-import { createCom } from '../actions/comActions';
+import { createCom } from '../../../actions/comActions';
 
 const CreateCommunityModal = ({ open, onClose }) => {
     const dispatch = useDispatch()
 
+    // Selectors
     const { loading, success, error } = useSelector(state => state.comCreate)
 
+    // States
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-
-    const handleCreateCommunity = () => {
-        dispatch(createCom({ name, description }))
-    }
 
     const onCloseModal = () => {
         onClose()
@@ -56,7 +54,7 @@ const CreateCommunityModal = ({ open, onClose }) => {
                         primary
                         loading={loading}
                         disabled={name.length === 0 || description.length === 0}
-                        onClick={handleCreateCommunity}
+                        onClick={() => dispatch(createCom({ name, description }))}
                     >
                         Create community
                     </Button>

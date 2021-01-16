@@ -3,8 +3,8 @@ import { Route, withRouter } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader, Dimmer } from 'semantic-ui-react';
 
-import { listenUser } from './actions/userActions';
 import { HomePage, LandingPage, ProfilePage, CommunityListPage, CommunityPage, FriendsPage } from './pages';
+import { listenUser } from './actions/userActions';
 
 const App = ({ history }) => {
   // Listen to auth state
